@@ -8,15 +8,16 @@ const defaults = {
   uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
 }
 
+const settings = {
+  useNewUrlParser: true, useUnifiedTopology: false
+}
+
 export default class Connection {
   constructor (options) {
     Hoek.assert(this instanceof Connection, 'MongoDB cache client must be instantiated using new')
 
-    this.db = null
-    this.client = null
     this.collections = {}
     this.isConnected = false
-    this.connectionPromise = null
     this.isConnectionStarted = false
     this.settings = this.getSettings(options)
 
@@ -48,21 +49,19 @@ export default class Connection {
       return
     }
 
-    if (this.connectionPromise) {
-      return this.connectionPromise
+    if (this.isConnectionStarted) {
+      return
     }
 
     this.isConnectionStarted = true
 
     try {
-      this.connectionPromise = MongoDB.MongoClient.connect(this.settings.uri, {
-        useNewUrlParser: true
-      })
-      this.client = await this.connectionPromise
+      this.client = await MongoDB.MongoClient.connect(this.settings.uri, settings)
       this.db = this.client.db()
       this.isConnected = true
     } catch (err) {
-      delete this.connectionPromise
+      this.isConnectionStarted = false
+      this.isConnected = false
       throw err
     }
   }
@@ -70,13 +69,11 @@ export default class Connection {
   stop () {
     if (this.client) {
       this.client.close()
-
-      delete this.db
       delete this.client
+      delete this.db
       this.collections = {}
-      this.isConnected = false
-      delete this.connectionPromise
       this.isConnectionStarted = false
+      this.isConnected = false
     }
   }
 

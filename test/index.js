@@ -1,14 +1,15 @@
 import { expect } from 'chai'
 import Catbox from '@hapi/catbox'
-import Mongo from '../lib'
-import Mongodb from 'mongodb'
+import CatboxMongoDB from '@modernpoacher/catbox-mongodb'
+import MongoDB from 'mongodb'
 
-describe('Mongo', () => {
+describe('@modernpoacher/catbox-mongodb', () => {
   before(async () => {
-    const client = await Mongodb.MongoClient.connect('mongodb://localhost:27017/unit-testing', {
+    const client = await MongoDB.MongoClient.connect('mongodb://localhost:27017/unit-testing', {
       autoReconnect: false,
       poolSize: 4,
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: false
     })
 
     const db = client.db()
@@ -20,10 +21,11 @@ describe('Mongo', () => {
   })
 
   after(async () => {
-    const client = await Mongodb.MongoClient.connect('mongodb://localhost:27017/unit-testing', {
+    const client = await MongoDB.MongoClient.connect('mongodb://localhost:27017/unit-testing', {
       autoReconnect: false,
       poolSize: 4,
-      useNewUrlParser: true
+      useNewUrlParser: true,
+      useUnifiedTopology: false
     })
 
     const db = client.db()
@@ -33,14 +35,14 @@ describe('Mongo', () => {
   })
 
   it('starts', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
     expect(client.isReady()).to.equal(true)
     await client.stop()
   })
 
   it('stops', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
     await client.stop()
     expect(client.isReady()).to.equal(false)
@@ -52,7 +54,7 @@ describe('Mongo', () => {
       partition: 'unit-testing'
     }
 
-    const client = new Mongo(options)
+    const client = new CatboxMongoDB(options)
 
     try {
       await client.start()
@@ -69,7 +71,7 @@ describe('Mongo', () => {
   }).timeout(4000)
 
   it('sets/gets an item', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     const key = { id: 'item', segment: 'mockSegment' }
@@ -82,7 +84,7 @@ describe('Mongo', () => {
   })
 
   it('sets/gets an item (zero)', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     const key = { id: 'zero', segment: 'mockSegment' }
@@ -95,7 +97,7 @@ describe('Mongo', () => {
   })
 
   it('sets/gets an item (Object, Array, Number, String, Date, RegExp)', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     const key = { id: 'item', segment: 'mockSegment' }
@@ -118,7 +120,7 @@ describe('Mongo', () => {
   })
 
   it('does not set/get an item with a non-positive ttl', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     const key = { id: 'non-positive-ttl', segment: 'mockSegment' }
@@ -130,7 +132,7 @@ describe('Mongo', () => {
   })
 
   it('returns null when getting an item with a null key', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     expect(await client.get(null)).to.equal(null)
@@ -139,7 +141,7 @@ describe('Mongo', () => {
   })
 
   it('returns null when getting an item which has expired', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     const key = { id: 'expired', segment: 'mockSegment' }
@@ -157,7 +159,7 @@ describe('Mongo', () => {
   })
 
   it('throws when getting an item with an invalid key', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     try {
@@ -170,7 +172,7 @@ describe('Mongo', () => {
   })
 
   it('throws when setting an item with a null key', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     try {
@@ -183,7 +185,7 @@ describe('Mongo', () => {
   })
 
   it('throws when setting an item with an invalid key', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     try {
@@ -196,7 +198,7 @@ describe('Mongo', () => {
   })
 
   it('throws when setting an item with a circular reference', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     const key = { id: 'circular-reference', segment: 'mockSegment' }
@@ -213,7 +215,7 @@ describe('Mongo', () => {
   })
 
   it('throws when dropping an item with a null key', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     try {
@@ -226,7 +228,7 @@ describe('Mongo', () => {
   })
 
   it('throws when dropping an item with an invalid key', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
 
     try {
@@ -239,7 +241,7 @@ describe('Mongo', () => {
   })
 
   it('throws when getting an item after the client is stopped', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
     await client.stop()
 
@@ -253,7 +255,7 @@ describe('Mongo', () => {
   })
 
   it('throws when setting an item after the client is stopped', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
     await client.stop()
 
@@ -267,7 +269,7 @@ describe('Mongo', () => {
   })
 
   it('throws when dropping an item after the client is stopped', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
     await client.stop()
 
@@ -279,7 +281,7 @@ describe('Mongo', () => {
   })
 
   it('throws when dropping an item after the client is stopped (key)', async () => {
-    const client = new Catbox.Client(Mongo)
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
     await client.stop()
 
@@ -298,7 +300,7 @@ describe('Mongo', () => {
     }
 
     expect(() => {
-      const client = new Catbox.Client(Mongo)
+      const client = new Catbox.Client(CatboxMongoDB)
       return new Catbox.Policy(config, client, '')
     }).to.throw(Error)
   })
@@ -309,14 +311,14 @@ describe('Mongo', () => {
     }
 
     expect(() => {
-      const client = new Catbox.Client(Mongo)
+      const client = new Catbox.Client(CatboxMongoDB)
       return new Catbox.Policy(config, client, 'a\0b')
     }).to.throw(Error)
   })
 
   it('throws without the keyword "new"', () => {
     expect(() => {
-      Mongo()
+      CatboxMongoDB()
     }).to.throw(Error)
   })
 
@@ -326,7 +328,7 @@ describe('Mongo', () => {
     }
 
     expect(() => {
-      return new Mongo(options)
+      return new CatboxMongoDB(options)
     }).to.throw(Error, 'Cache partition name cannot be "admin", "local", or "config" when using MongoDB')
   })
 
@@ -336,7 +338,7 @@ describe('Mongo', () => {
     }
 
     expect(() => {
-      return new Mongo(options)
+      return new CatboxMongoDB(options)
     }).to.throw(Error, 'Cache partition name cannot be "admin", "local", or "config" when using MongoDB')
   })
 
@@ -347,7 +349,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://bob:password@127.0.0.1:27017/unit-testing')
@@ -359,7 +361,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://bob:password@127.0.0.1:27017/unit-testing')
@@ -371,7 +373,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://bob:password@127.0.0.1:27017/unit-testing?maxPoolSize=5')
@@ -383,7 +385,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://127.0.0.1:27017/unit-testing?maxPoolSize=5')
@@ -395,7 +397,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://bob:password@127.0.0.1:27017,127.0.0.2:27017,127.0.0.3:27017/unit-testing')
@@ -407,7 +409,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://bob:password@127.0.0.1:27017,127.0.0.2:27017,127.0.0.3:27017/unit-testing')
@@ -419,7 +421,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://bob:password@127.0.0.1:27017,127.0.0.2:27017,127.0.0.3:27017/unit-testing')
@@ -431,7 +433,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       const settings = mongo.getSettings(options)
 
       expect(settings.uri).to.equal('mongodb://bob:password@127.0.0.1:27017,127.0.0.2:27017,127.0.0.3:27017/unit-testing?maxPoolSize=5&replicaSet=rs')
@@ -445,7 +447,7 @@ describe('Mongo', () => {
           uri: 'mongodb://tester:secret@127.0.0.1:27017/?maxPoolSize=5',
           partition: 'unit-testing'
         }
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         await mongo.start()
 
@@ -460,7 +462,7 @@ describe('Mongo', () => {
             uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5',
             partition: 'unit-testing'
           }
-          const mongo = new Mongo(options)
+          const mongo = new CatboxMongoDB(options)
 
           await mongo.start()
 
@@ -478,7 +480,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         try {
           await mongo.start()
@@ -495,7 +497,7 @@ describe('Mongo', () => {
             uri: 'mongodb://bob:password@127.0.0.1:27017/?maxPoolSize=5',
             partition: 'unit-testing'
           }
-          const mongo = new Mongo(options)
+          const mongo = new CatboxMongoDB(options)
 
           try {
             await mongo.start()
@@ -517,7 +519,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         expect(() => mongo.validateSegmentName('')).to.throw(Error, 'Empty string')
       })
@@ -528,7 +530,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         expect(() => mongo.validateSegmentName('\0test')).to.throw(Error, 'Includes null character')
       })
@@ -539,7 +541,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         expect(() => mongo.validateSegmentName('system.')).to.throw(Error, 'Begins with "system."')
       })
@@ -550,7 +552,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         expect(() => mongo.validateSegmentName('te$t')).to.throw(Error, 'Contains "$"')
       })
@@ -561,7 +563,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         expect(() => mongo.validateSegmentName('0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789')).to.throw(Error, 'Segment and partition name lengths exceeds 100 characters')
       })
@@ -574,7 +576,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         expect(mongo.validateSegmentName('valid')).to.be.null
       })
@@ -588,7 +590,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
 
       try {
         await mongo.getCollection('test')
@@ -602,7 +604,7 @@ describe('Mongo', () => {
         uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5',
         partition: 'unit-testing'
       }
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
 
       await mongo.start()
 
@@ -617,7 +619,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       await mongo.start()
 
       try {
@@ -634,7 +636,7 @@ describe('Mongo', () => {
         uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5',
         partition: 'unit-testing'
       }
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
 
       await mongo.start()
 
@@ -662,7 +664,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         try {
           await mongo.get('test')
@@ -682,7 +684,7 @@ describe('Mongo', () => {
           segment: 'mockSegment'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
         mongo.isConnectionStarted = true
         mongo.isConnected = true
 
@@ -708,7 +710,7 @@ describe('Mongo', () => {
           segment: 'mockSegment'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
         mongo.isConnectionStarted = true
         mongo.isConnected = true
 
@@ -734,7 +736,7 @@ describe('Mongo', () => {
           segment: 'mockSegment'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
         mongo.isConnectionStarted = true
         mongo.isConnected = false
 
@@ -762,7 +764,7 @@ describe('Mongo', () => {
           segment: 'mockSegment'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         await mongo.start()
         await mongo.set(key, 'mock value', 200)
@@ -781,7 +783,7 @@ describe('Mongo', () => {
           partition: 'unit-testing'
         }
 
-        const mongo = new Mongo(options)
+        const mongo = new CatboxMongoDB(options)
 
         await mongo.start()
 
@@ -799,7 +801,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
 
       try {
         await mongo.set({ id: 'item', segment: 'mockSegment' }, 'test1', 3600)
@@ -814,7 +816,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       await mongo.start()
 
       expect(await mongo.set({ id: 'item', segment: 'mockSegment' }, 'test1', 3600)).to.be.undefined
@@ -833,7 +835,7 @@ describe('Mongo', () => {
         segment: 'mockSegment'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       mongo.isConnectionStarted = true
       mongo.isConnected = true
 
@@ -857,7 +859,7 @@ describe('Mongo', () => {
         segment: 'mockSegment'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       mongo.isConnectionStarted = true
       mongo.isConnected = true
 
@@ -882,7 +884,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
 
       try {
         await mongo.drop({ id: 'item', segment: 'mockSegment' })
@@ -897,7 +899,7 @@ describe('Mongo', () => {
         partition: 'unit-testing'
       }
 
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
 
       await mongo.start()
 
@@ -915,7 +917,7 @@ describe('Mongo', () => {
         id: 'item',
         segment: 'mockSegment'
       }
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       mongo.isConnectionStarted = true
       mongo.isConnected = true
 
@@ -937,7 +939,7 @@ describe('Mongo', () => {
         id: 'item',
         segment: 'mockSegment'
       }
-      const mongo = new Mongo(options)
+      const mongo = new CatboxMongoDB(options)
       mongo.isConnectionStarted = true
 
       mongo.getCollection = (item) => (
