@@ -66,9 +66,9 @@ export default class Connection {
     }
   }
 
-  stop () {
+  async stop () {
     if (this.client) {
-      this.client.close()
+      await this.client.close()
       delete this.client
       delete this.db
       this.collections = {}
@@ -129,10 +129,9 @@ export default class Connection {
     }
 
     const collection = await this.db.collection(name)
-
     await collection.createIndex({ expiresAt: 1 }, { expireAfterSeconds: 0 })
-    this.collections[name] = collection
 
+    this.collections[name] = collection
     return collection
   }
 
