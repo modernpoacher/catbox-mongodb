@@ -96,15 +96,15 @@ export default class Connection {
       throw new Boom('Empty string')
     }
 
-    if (name.indexOf('\0') !== -1) {
+    if (name.includes('\0')) {
       throw new Boom('Includes null character')
     }
 
-    if (name.indexOf('system.') === 0) {
+    if (name.startsWith('system.')) {
       throw new Boom('Begins with "system."')
     }
 
-    if (name.indexOf('$') !== -1) {
+    if (name.includes('$')) {
       throw new Boom('Contains "$"')
     }
 
