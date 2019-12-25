@@ -4,12 +4,15 @@ import {
   Boom
 } from '@hapi/boom'
 
-const defaults = {
+const OPTIONS = {
   uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
 }
 
-const settings = {
-  useNewUrlParser: true, useUnifiedTopology: true, connectTimeoutMS: 1000, serverSelectionTimeoutMS: 1000
+const CONNECTION = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  connectTimeoutMS: 1000,
+  serverSelectionTimeoutMS: 1000
 }
 
 export default class Connection {
@@ -37,7 +40,7 @@ export default class Connection {
     Hoek.assert(options.partition !== 'admin' && options.partition !== 'local' && options.partition !== 'config', 'Cache partition name cannot be "admin", "local", or "config" when using MongoDB')
     Hoek.assert(options.partition.length < 64, 'Cache partition must be less than 64 bytes when using MongoDB')
 
-    const settings = Hoek.applyToDefaults(defaults, options)
+    const settings = Hoek.applyToDefaults(OPTIONS, options)
 
     settings.uri = settings.uri.replace(/(mongodb:\/\/[^/]*)([^?]*)(.*)/, `$1/${settings.partition}$3`)
 
@@ -56,8 +59,9 @@ export default class Connection {
     this.isConnectionStarted = true
 
     try {
-      this.client = await MongoDB.MongoClient.connect(this.settings.uri, settings)
-      this.db = this.client.db()
+      const client = await MongoDB.MongoClient.connect(this.settings.uri, CONNECTION)
+      this.client = client
+      this.db = client.db()
       this.isConnected = true
     } catch (e) {
       this.isConnectionStarted = false
