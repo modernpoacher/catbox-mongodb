@@ -1,14 +1,15 @@
 {
-  "name": "catbox-mongodb",
-  "description": "MongoDB adapter for catbox",
-  "version": "4.2.1",
+  "name": "@modernpoacher/catbox-mongodb",
+  "description": "MongoDB adapter for Catbox",
+  "version": "1.0.0",
   "author": "Eran Hammer <eran@hammer.io> (http://hueniverse.com)",
   "contributors": [
+    "Jonathan Perry <jonathanperry@modernpoacher.com>",
     "Marcus Poehls <marcus@futurestud.io> (https://futurestud.io)",
     "Wyatt Preul <wpreul@gmail.com> (http://jsgeek.com)",
     "Jarda Kotesovec <jarda.kotesovec@gmail.com>"
   ],
-  "repository": "git://github.com/hapijs/catbox-mongodb",
+  "repository": "git://github.com/modernpoacher/catbox-mongodb",
   "main": "lib/index.js",
   "keywords": [
     "cache",
@@ -19,18 +20,47 @@
     "node": ">=8.9.0"
   },
   "dependencies": {
-    "boom": "7.x.x",
-    "hoek": "6.x.x",
-    "mongodb": "3.x.x"
+    "@hapi/boom": "^8.0.1",
+    "@hapi/hoek": "^8.5.0",
+    "mongodb": "^3.4.1"
   },
   "devDependencies": {
-    "catbox": "10.x.x",
-    "code": "5.x.x",
-    "lab": "18.x.x"
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-export-default-from": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/register": "^7.7.7",
+    "@hapi/catbox": "^10.2.3",
+    "@hapi/code": "^7.0.0",
+    "@hapi/lab": "^21.0.0",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "chai": "^4.2.0",
+    "core-js": "^3.6.0",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-import-resolver-babel-module": "^5.1.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "mocha": "^6.2.2",
+    "rimraf": "^3.0.0"
   },
   "scripts": {
-    "test": "lab -r console -t 100 -a code -L",
-    "test-cov-html": "lab -r html -o coverage.html -a code -L"
+    "test": "mocha test --recursive -r @babel/register",
+    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
+    "prepublishOnly": "npm run build",
+    "prebuild": "npm run clean",
+    "build": "npm run babel",
+    "clean": "rimraf lib",
+    "babel": "babel src -d lib",
+    "babel:watch": "npm run babel -- -w",
+    "lint": "eslint src test",
+    "lint:fix": "npm run lint -- --fix",
+    "pre-commit": "npm run lint && npm run babel && git add lib"
   },
   "license": "BSD-3-Clause"
 }
