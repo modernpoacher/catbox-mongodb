@@ -9,7 +9,7 @@ describe('@modernpoacher/catbox-mongodb', () => {
       autoReconnect: false,
       poolSize: 4,
       useNewUrlParser: true,
-      useUnifiedTopology: false
+      useUnifiedTopology: true
     })
 
     const db = client.db()
@@ -25,7 +25,7 @@ describe('@modernpoacher/catbox-mongodb', () => {
       autoReconnect: false,
       poolSize: 4,
       useNewUrlParser: true,
-      useUnifiedTopology: false
+      useUnifiedTopology: true
     })
 
     const db = client.db()
@@ -48,7 +48,7 @@ describe('@modernpoacher/catbox-mongodb', () => {
     expect(client.isReady()).to.equal(false)
   })
 
-  it('connects after a previous connection has failed', async () => {
+  it('reconnects', async () => {
     const options = {
       uri: 'mongodb://wrong-uri',
       partition: 'unit-testing'
@@ -59,10 +59,11 @@ describe('@modernpoacher/catbox-mongodb', () => {
     try {
       await client.start()
     } catch ({ message }) {
-      expect(message).to.include('failed to connect to server [wrong-uri:27017] on first connect')
+      expect(message).to.equal('Server selection timed out after 1000 ms')
     }
 
     client.settings.uri = 'mongodb://127.0.0.1:27017/unit-testing?maxPoolSize=5'
+
     await client.start()
 
     expect(client.isReady()).to.equal(true)
@@ -485,7 +486,7 @@ describe('@modernpoacher/catbox-mongodb', () => {
         try {
           await mongo.start()
         } catch ({ message }) {
-          expect(message).to.include('failed to connect to server [127.0.0.1:27017] on first connect')
+          expect(message).to.equal('Server selection timed out after 1000 ms')
         }
 
         await mongo.stop()

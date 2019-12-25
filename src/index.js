@@ -9,7 +9,7 @@ const defaults = {
 }
 
 const settings = {
-  useNewUrlParser: true, useUnifiedTopology: false
+  useNewUrlParser: true, useUnifiedTopology: true, connectTimeoutMS: 1000, serverSelectionTimeoutMS: 1000
 }
 
 export default class Connection {
@@ -59,10 +59,10 @@ export default class Connection {
       this.client = await MongoDB.MongoClient.connect(this.settings.uri, settings)
       this.db = this.client.db()
       this.isConnected = true
-    } catch (err) {
+    } catch (e) {
       this.isConnectionStarted = false
       this.isConnected = false
-      throw err
+      throw e
     }
   }
 
