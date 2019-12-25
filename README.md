@@ -1,9 +1,10 @@
 # @modernpoacher/catbox-mongodb
 
-MongoDB adapter for [catbox](https://github.com/hapijs/catbox)
+A MongoDB adapter for [catbox](https://github.com/hapijs/catbox).
 
-**@modernpoacher/catbox-mongodb** serializes values to BSON using the MongoDB driver. The following data types are supported for this adapter: Object, Array, Number, String, Date, RegExp.
+**@modernpoacher/catbox-mongodb** serializes values to BSON using the MongoDB driver.
 
+This adapter supports `Object`, `Array`, `Number`, `String`, `Date`, and `RegExp` data types.
 
 ## Installation
 Install `@modernpoacher/catbox-mongodb` via NPM.
