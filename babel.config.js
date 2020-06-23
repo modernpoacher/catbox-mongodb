@@ -11,10 +11,14 @@ const {
 
 debug.enable(DEBUG)
 
+log('`@modernpoacher/catbox-mongodb` is awake')
+
 function env () {
   log({ NODE_ENV })
 
-  return NODE_ENV === 'production'
+  return (
+    NODE_ENV === 'production'
+  )
 }
 
 const presets = [
