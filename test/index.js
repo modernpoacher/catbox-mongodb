@@ -39,35 +39,21 @@ describe('@modernpoacher/catbox-mongodb', () => {
     await client.start()
     expect(client.isReady()).to.equal(true)
     await client.stop()
-  })
+  }).timeout(4000)
 
   it('stops', async () => {
     const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
     await client.stop()
     expect(client.isReady()).to.equal(false)
-  })
+  }).timeout(4000)
 
   it('reconnects', async () => {
-    const options = {
-      uri: 'mongodb://wrong-uri',
-      partition: 'unit-testing'
-    }
-
-    const client = new CatboxMongoDB(options)
-
-    try {
-      await client.start()
-    } catch ({ message }) {
-      expect(message).to.equal('Server selection timed out after 1000 ms')
-    }
-
-    client.settings.uri = 'mongodb://127.0.0.1:27017/unit-testing?maxPoolSize=5'
-
+    const client = new Catbox.Client(CatboxMongoDB)
     await client.start()
-
+    await client.stop()
+    await client.start()
     expect(client.isReady()).to.equal(true)
-
     await client.stop()
   }).timeout(4000)
 
@@ -480,13 +466,12 @@ describe('@modernpoacher/catbox-mongodb', () => {
           uri: 'mongodb://bob:password@127.0.0.1:27017/?maxPoolSize=5',
           partition: 'unit-testing'
         }
-
         const mongo = new CatboxMongoDB(options)
 
         try {
           await mongo.start()
         } catch ({ message }) {
-          expect(message).to.equal('Server selection timed out after 1000 ms')
+          expect(message).to.equal('Authentication failed.')
         }
 
         await mongo.stop()
