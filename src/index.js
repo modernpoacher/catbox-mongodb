@@ -6,11 +6,11 @@ import {
 
 const debug = require('debug')
 
-const log = debug('@modernpoacher/catbox-mongodb')
+const log = debug('@modernpoacher/catbox-mongodb:connection')
 
 const {
   env: {
-    DEBUG = '@modernpoacher/catbox-mongodb'
+    DEBUG = '@modernpoacher/catbox-mongodb:*'
   }
 } = process
 
