@@ -23,6 +23,8 @@
   "dependencies": {
     "@hapi/boom": "^9.1.0",
     "@hapi/hoek": "^9.0.4",
+    "cross-env": "^7.0.2",
+    "debug": "^4.1.1",
     "mongodb": "^3.5.9"
   },
   "devDependencies": {
@@ -51,16 +53,17 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
+    "prepare": "npm run clean && cross-env NODE_ENV=production npm run build",
+    "install": "npm run clean && cross-env NODE_ENV=production npm run build",
     "test": "mocha test --recursive -r @babel/register",
     "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
-    "prepublishOnly": "npm run build",
     "prebuild": "npm run clean",
     "build": "npm run babel",
     "clean": "rimraf lib",
     "babel": "babel src -d lib",
     "babel:watch": "npm run babel -- -w",
-    "lint": "eslint src test",
+    "lint": "eslint *.js src test",
     "lint:fix": "npm run lint -- --fix",
-    "pre-commit": "npm run lint && npm run babel && git add lib"
+    "pre-commit": "npm run lint && npm run clean && npm run babel && git add lib"
   }
 }

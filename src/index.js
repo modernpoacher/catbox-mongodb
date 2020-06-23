@@ -4,6 +4,18 @@ import {
   Boom
 } from '@hapi/boom'
 
+const debug = require('debug')
+
+const log = debug('@modernpoacher/catbox-mongodb')
+
+const {
+  env: {
+    DEBUG = '@modernpoacher/catbox-mongodb'
+  }
+} = process
+
+debug.enable(DEBUG)
+
 const OPTIONS = {
   uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
 }
@@ -14,6 +26,8 @@ const CONNECTION = {
   connectTimeoutMS: 1000,
   serverSelectionTimeoutMS: 1000
 }
+
+log('`Connnection` is awake')
 
 export default class Connection {
   constructor (options) {
