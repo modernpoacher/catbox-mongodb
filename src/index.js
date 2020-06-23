@@ -1,20 +1,12 @@
+import debug from 'debug'
+
 import MongoDB from 'mongodb'
 import Hoek from '@hapi/hoek'
 import {
   Boom
 } from '@hapi/boom'
 
-const debug = require('debug')
-
 const log = debug('@modernpoacher/catbox-mongodb:connection')
-
-const {
-  env: {
-    DEBUG = '@modernpoacher/catbox-mongodb:*'
-  }
-} = process
-
-debug.enable(DEBUG)
 
 const OPTIONS = {
   uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5'

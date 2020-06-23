@@ -23,10 +23,8 @@
   "dependencies": {
     "@hapi/boom": "^9.1.0",
     "@hapi/hoek": "^9.0.4",
-    "cross-env": "^7.0.2",
     "debug": "^4.1.1",
-    "mongodb": "^3.5.9",
-    "rimraf": "^3.0.2"
+    "mongodb": "^3.5.9"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
@@ -43,6 +41,7 @@
     "babel-plugin-module-resolver": "^4.0.0",
     "chai": "^4.2.0",
     "core-js": "^3.6.5",
+    "cross-env": "^7.0.2",
     "eslint": "^7.3.1",
     "eslint-config-standard": "^14.1.1",
     "eslint-import-resolver-babel-module": "^5.1.2",
@@ -50,20 +49,22 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^8.0.1"
+    "mocha": "^8.0.1",
+    "rimraf": "^3.0.2"
   },
   "scripts": {
-    "prepare": "npm run clean && cross-env NODE_ENV=production npm run build",
-    "install": "npm run clean && cross-env NODE_ENV=production npm run build",
-    "test": "mocha test --recursive -r @babel/register",
-    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
+    "prepare": "cross-env NODE_ENV=production npm run build",
+    "install": "npm run prepare",
     "prebuild": "npm run clean",
+    "test": "cross-env NODE_ENV=test mocha test --recursive -r @babel/register",
+    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
     "build": "npm run babel",
+    "build:watch": "npm run babel:watch",
     "clean": "rimraf lib",
     "babel": "babel src -d lib",
     "babel:watch": "npm run babel -- -w",
     "lint": "eslint *.js src test",
     "lint:fix": "npm run lint -- --fix",
-    "pre-commit": "npm run lint && npm run clean && npm run babel && git add lib"
+    "pre-commit": "npm run lint && npm run build && git add lib"
   }
 }
