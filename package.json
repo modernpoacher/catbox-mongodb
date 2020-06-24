@@ -53,8 +53,7 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "install": "npm run prepare",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
     "prebuild": "npm run clean",
     "test": "cross-env NODE_ENV=test mocha test --recursive -r @babel/register",
     "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
