@@ -1,7 +1,13 @@
 {
   "name": "@modernpoacher/catbox-mongodb",
-  "description": "MongoDB adapter for Catbox",
   "version": "1.0.10",
+  "description": "MongoDB adapter for Catbox",
+  "keywords": [
+    "cache",
+    "catbox",
+    "mongodb"
+  ],
+  "main": "lib/index.js",
   "author": "Eran Hammer <eran@hammer.io> (http://hueniverse.com)",
   "contributors": [
     "Jonathan Perry <jonathanperry@modernpoacher.com>",
@@ -9,16 +15,24 @@
     "Wyatt Preul <wpreul@gmail.com> (http://jsgeek.com)",
     "Jarda Kotesovec <jarda.kotesovec@gmail.com>"
   ],
-  "repository": "git://github.com/modernpoacher/catbox-mongodb",
-  "main": "lib/index.js",
-  "keywords": [
-    "cache",
-    "catbox",
-    "mongodb"
-  ],
   "license": "BSD-3-Clause",
   "engines": {
     "node": ">=12.18.1"
+  },
+  "repository": "git://github.com/modernpoacher/catbox-mongodb",
+  "scripts": {
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "prebuild": "npm run clean",
+    "test": "cross-env NODE_ENV=test mocha test --recursive -r @babel/register",
+    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
+    "build": "npm run babel",
+    "build:watch": "npm run babel:watch",
+    "clean": "rimraf lib",
+    "babel": "babel src -d lib",
+    "babel:watch": "npm run babel -- -w",
+    "lint": "eslint .",
+    "lint:fix": "npm run lint -- --fix",
+    "pre-commit": "npm run lint && npm run build && git add lib"
   },
   "dependencies": {
     "@hapi/boom": "^9.1.0",
@@ -51,19 +65,5 @@
     "eslint-plugin-standard": "^4.0.1",
     "mocha": "^8.0.1",
     "rimraf": "^3.0.2"
-  },
-  "scripts": {
-    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
-    "prebuild": "npm run clean",
-    "test": "cross-env NODE_ENV=test mocha test --recursive -r @babel/register",
-    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
-    "build": "npm run babel",
-    "build:watch": "npm run babel:watch",
-    "clean": "rimraf lib",
-    "babel": "babel src -d lib",
-    "babel:watch": "npm run babel -- -w",
-    "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
-    "pre-commit": "npm run lint && npm run build && git add lib"
   }
 }
