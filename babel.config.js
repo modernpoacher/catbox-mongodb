@@ -4,12 +4,9 @@ const log = debug('@modernpoacher/catbox-mongodb')
 
 const {
   env: {
-    DEBUG = '@modernpoacher/catbox-mongodb',
     NODE_ENV = 'development'
   }
 } = process
-
-debug.enable(DEBUG)
 
 log('`@modernpoacher/catbox-mongodb` is awake')
 
