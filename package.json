@@ -17,7 +17,7 @@
   ],
   "license": "BSD-3-Clause",
   "engines": {
-    "node": ">=12.18.1"
+    "node": ">=12.19.0"
   },
   "repository": "git://github.com/modernpoacher/catbox-mongodb",
   "scripts": {
