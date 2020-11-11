@@ -51,7 +51,7 @@
     "@hapi/catbox": "^11.1.1",
     "@hapi/code": "^8.0.2",
     "@hapi/lab": "^24.1.0",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.1",
     "babel-plugin-module-resolver": "^4.0.0",
     "chai": "^4.2.0",
     "core-js": "^3.7.0",
