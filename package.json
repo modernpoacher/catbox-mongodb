@@ -50,7 +50,7 @@
     "@babel/register": "^7.14.5",
     "@hapi/catbox": "^11.1.1",
     "@hapi/code": "^8.0.3",
-    "@hapi/lab": "^24.2.1",
+    "@hapi/lab": "^24.3.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-module-resolver": "^4.1.0",
     "chai": "^4.3.4",
