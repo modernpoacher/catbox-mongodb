@@ -37,7 +37,7 @@
   "dependencies": {
     "@hapi/boom": "^9.1.4",
     "@hapi/hoek": "^9.2.1",
-    "debug": "^4.3.2",
+    "debug": "^4.3.3",
     "mongodb": "^4.2.0"
   },
   "devDependencies": {
