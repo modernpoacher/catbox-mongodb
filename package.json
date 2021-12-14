@@ -38,16 +38,16 @@
     "@hapi/boom": "^9.1.4",
     "@hapi/hoek": "^9.2.1",
     "debug": "^4.3.3",
-    "mongodb": "^4.2.1"
+    "mongodb": "^4.2.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
-    "@babel/core": "^7.16.0",
-    "@babel/eslint-parser": "^7.16.3",
-    "@babel/plugin-proposal-class-properties": "^7.16.0",
-    "@babel/plugin-proposal-export-default-from": "^7.16.0",
-    "@babel/preset-env": "^7.16.4",
-    "@babel/register": "^7.16.0",
+    "@babel/core": "^7.16.5",
+    "@babel/eslint-parser": "^7.16.5",
+    "@babel/plugin-proposal-class-properties": "^7.16.5",
+    "@babel/plugin-proposal-export-default-from": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/register": "^7.16.5",
     "@hapi/catbox": "^11.1.1",
     "@hapi/code": "^8.0.5",
     "@hapi/lab": "^24.4.0",
