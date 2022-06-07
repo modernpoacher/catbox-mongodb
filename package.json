@@ -38,7 +38,7 @@
     "@hapi/boom": "^10.0.0",
     "@hapi/hoek": "^10.0.0",
     "debug": "^4.3.4",
-    "mongodb": "^4.6.0"
+    "mongodb": "^4.7.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.10",
