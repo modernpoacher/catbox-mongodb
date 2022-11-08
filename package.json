@@ -53,7 +53,7 @@
     "@hapi/lab": "^25.0.1",
     "babel-loader": "^9.1.0",
     "babel-plugin-module-resolver": "^4.1.0",
-    "chai": "^4.3.6",
+    "chai": "^4.3.7",
     "core-js": "^3.26.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.27.0",
