@@ -49,7 +49,7 @@
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
     "@hapi/catbox": "^12.1.0",
-    "@hapi/code": "^9.0.1",
+    "@hapi/code": "^9.0.2",
     "@hapi/lab": "^25.0.1",
     "babel-loader": "^9.1.0",
     "babel-plugin-module-resolver": "^4.1.0",
