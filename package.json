@@ -63,6 +63,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "mocha": "^10.2.0",
-    "rimraf": "^4.0.4"
+    "rimraf": "^4.0.5"
   }
 }
