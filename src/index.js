@@ -8,6 +8,8 @@ import {
 
 const log = debug('@modernpoacher/catbox-mongodb:connection')
 
+log('`@modernpoacher/catbox-mongodb` is awake')
+
 const OPTIONS = {
   uri: 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
 }
@@ -18,8 +20,6 @@ const CONNECTION = {
   connectTimeoutMS: 1000,
   serverSelectionTimeoutMS: 1000
 }
-
-log('`Connnection` is awake')
 
 export default class Connection {
   constructor (options) {
