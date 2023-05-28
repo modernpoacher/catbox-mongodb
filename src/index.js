@@ -1,6 +1,6 @@
 import debug from 'debug'
 
-import MongoDB from 'mongodb'
+import * as MongoDB from 'mongodb'
 import Hoek from '@hapi/hoek'
 import {
   Boom
@@ -15,8 +15,6 @@ const OPTIONS = {
 }
 
 const CONNECTION = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   connectTimeoutMS: 1000,
   serverSelectionTimeoutMS: 1000
 }

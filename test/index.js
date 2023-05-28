@@ -1,91 +1,83 @@
 import { expect } from 'chai'
 import Catbox from '@hapi/catbox'
 import CatboxMongoDB from '@modernpoacher/catbox-mongodb'
-import MongoDB from 'mongodb'
+import * as MongoDB from 'mongodb'
+
+const CREATE_USER = {
+  createUser: 'tester',
+  pwd: 'secret',
+  roles: ['dbAdmin']
+}
 
 describe('@modernpoacher/catbox-mongodb', () => {
   before(async () => {
-    const client = await MongoDB.MongoClient.connect('mongodb://localhost:27017/unit-testing', {
-      autoReconnect: false,
-      poolSize: 4,
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
-
-    const db = client.db()
+    const mongo = await MongoDB.MongoClient.connect('mongodb://127.0.0.1:27017/unit-testing')
+    const db = mongo.db()
     await db.dropDatabase()
-    await db.addUser('tester', 'secret', {
-      roles: ['dbAdmin']
-    })
-    await client.close()
+    await db.command(CREATE_USER)
+    await mongo.close()
   })
 
   after(async () => {
-    const client = await MongoDB.MongoClient.connect('mongodb://localhost:27017/unit-testing', {
-      autoReconnect: false,
-      poolSize: 4,
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    })
-
-    const db = client.db()
+    const mongo = await MongoDB.MongoClient.connect('mongodb://127.0.0.1:27017/unit-testing')
+    const db = mongo.db()
     await db.dropDatabase()
     await db.removeUser('tester')
-    await client.close()
+    await mongo.close()
   })
 
   it('starts', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
-    expect(client.isReady()).to.equal(true)
-    await client.stop()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
+    expect(catbox.isReady()).to.equal(true)
+    await catbox.stop()
   }).timeout(4000)
 
   it('stops', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
-    await client.stop()
-    expect(client.isReady()).to.equal(false)
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
+    await catbox.stop()
+    expect(catbox.isReady()).to.equal(false)
   }).timeout(4000)
 
   it('reconnects', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
-    await client.stop()
-    await client.start()
-    expect(client.isReady()).to.equal(true)
-    await client.stop()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
+    await catbox.stop()
+    await catbox.start()
+    expect(catbox.isReady()).to.equal(true)
+    await catbox.stop()
   }).timeout(4000)
 
   it('sets/gets an item', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     const key = { id: 'item', segment: 'mockSegment' }
-    await client.set(key, '123', 500)
-    const { item } = await client.get(key)
+    await catbox.set(key, '123', 500)
+    const { item } = await catbox.get(key)
 
     expect(item).to.equal('123')
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('sets/gets an item (zero)', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     const key = { id: 'zero', segment: 'mockSegment' }
-    await client.set(key, 0, 20)
-    const { item } = await client.get(key)
+    await catbox.set(key, 0, 20)
+    const { item } = await catbox.get(key)
 
     expect(item).to.equal(0)
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('sets/gets an item (Object, Array, Number, String, Date, RegExp)', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     const key = { id: 'item', segment: 'mockSegment' }
     const value = {
@@ -98,47 +90,47 @@ describe('@modernpoacher/catbox-mongodb', () => {
       boolean: false
     }
 
-    await client.set(key, value, 500)
-    const { item } = await client.get(key)
+    await catbox.set(key, value, 500)
+    const { item } = await catbox.get(key)
 
     expect(item).to.eql(value)
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('does not set/get an item with a non-positive ttl', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     const key = { id: 'non-positive-ttl', segment: 'mockSegment' }
-    await client.set(key, 'mock value', 0)
+    await catbox.set(key, 'mock value', 0)
 
-    expect(await client.get(key)).to.be.null
+    expect(await catbox.get(key)).to.be.null
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('returns null when getting an item with a null key', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
-    expect(await client.get(null)).to.equal(null)
+    expect(await catbox.get(null)).to.equal(null)
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('returns null when getting an item which has expired', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     const key = { id: 'expired', segment: 'mockSegment' }
 
-    await client.set(key, 'x', 1)
+    await catbox.set(key, 'x', 1)
     await new Promise((resolve) => {
       setTimeout(async () => {
-        expect(await client.get(key)).to.equal(null)
+        expect(await catbox.get(key)).to.equal(null)
 
-        await client.stop()
+        await catbox.stop()
 
         resolve()
       }, 2)
@@ -146,136 +138,136 @@ describe('@modernpoacher/catbox-mongodb', () => {
   })
 
   it('throws when getting an item with an invalid key', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     try {
-      await client.get({})
+      await catbox.get({})
     } catch ({ message }) {
       expect(message).to.equal('Invalid key')
     }
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('throws when setting an item with a null key', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     try {
-      await client.set(null, {}, 1000)
+      await catbox.set(null, {}, 1000)
     } catch ({ message }) {
       expect(message).to.equal('Invalid key')
     }
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('throws when setting an item with an invalid key', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     try {
-      await client.set({}, {}, 1000)
+      await catbox.set({}, {}, 1000)
     } catch ({ message }) {
       expect(message).to.equal('Invalid key')
     }
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('throws when setting an item with a circular reference', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     const key = { id: 'circular-reference', segment: 'mockSegment' }
     const value = { a: 1 }
     value.b = value
 
     try {
-      await client.set(key, value, 10)
+      await catbox.set(key, value, 10)
     } catch ({ message }) {
-      expect(message).to.equal('cyclic dependency detected')
+      expect(message).to.equal('Cannot convert circular structure to BSON')
     }
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('throws when dropping an item with a null key', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     try {
-      await client.drop(null)
+      await catbox.drop(null)
     } catch ({ message }) {
       expect(message).to.equal('Invalid key')
     }
 
-    await client.stop()
+    await catbox.stop()
   })
 
   it('throws when dropping an item with an invalid key', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
 
     try {
-      await client.drop({})
+      await catbox.drop({})
     } catch ({ message }) {
       expect(message).to.equal('Invalid key')
     }
 
-    await client.stop()
+    await catbox.stop()
   })
 
-  it('throws when getting an item after the client is stopped', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
-    await client.stop()
+  it('throws when getting an item after the catbox is stopped', async () => {
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
+    await catbox.stop()
 
-    const key = { id: 'client-stopped', segment: 'mockSegment' }
+    const key = { id: 'catbox-stopped', segment: 'mockSegment' }
 
     try {
-      await client.get(key)
+      await catbox.get(key)
     } catch ({ message }) {
       expect(message).to.equal('Disconnected')
     }
   })
 
-  it('throws when setting an item after the client is stopped', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
-    await client.stop()
+  it('throws when setting an item after the catbox is stopped', async () => {
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
+    await catbox.stop()
 
-    const key = { id: 'client-stopped', segment: 'mockSegment' }
+    const key = { id: 'catbox-stopped', segment: 'mockSegment' }
 
     try {
-      await client.set(key, 'y', 1)
+      await catbox.set(key, 'y', 1)
     } catch ({ message }) {
       expect(message).to.equal('Disconnected')
     }
   })
 
-  it('throws when dropping an item after the client is stopped', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
-    await client.stop()
+  it('throws when dropping an item after the catbox is stopped', async () => {
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
+    await catbox.stop()
 
     try {
-      await client.drop('a')
+      await catbox.drop('a')
     } catch ({ message }) {
       expect(message).to.equal('Disconnected')
     }
   })
 
-  it('throws when dropping an item after the client is stopped (key)', async () => {
-    const client = new Catbox.Client(CatboxMongoDB)
-    await client.start()
-    await client.stop()
+  it('throws when dropping an item after the catbox is stopped (key)', async () => {
+    const catbox = new Catbox.Client(CatboxMongoDB)
+    await catbox.start()
+    await catbox.stop()
 
-    const key = { id: 'client-stopped', segment: 'mockSegment' }
+    const key = { id: 'catbox-stopped', segment: 'mockSegment' }
 
     try {
-      await client.drop(key)
+      await catbox.drop(key)
     } catch ({ message }) {
       expect(message).to.equal('Disconnected')
     }
@@ -287,8 +279,8 @@ describe('@modernpoacher/catbox-mongodb', () => {
     }
 
     expect(() => {
-      const client = new Catbox.Client(CatboxMongoDB)
-      return new Catbox.Policy(config, client, '')
+      const catbox = new Catbox.Client(CatboxMongoDB)
+      return new Catbox.Policy(config, catbox, '')
     }).to.throw(Error)
   })
 
@@ -298,8 +290,8 @@ describe('@modernpoacher/catbox-mongodb', () => {
     }
 
     expect(() => {
-      const client = new Catbox.Client(CatboxMongoDB)
-      return new Catbox.Policy(config, client, 'a\0b')
+      const catbox = new Catbox.Client(CatboxMongoDB)
+      return new Catbox.Policy(config, catbox, 'a\0b')
     }).to.throw(Error)
   })
 
