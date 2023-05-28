@@ -7,7 +7,8 @@
     "catbox",
     "mongodb"
   ],
-  "main": "lib/index.js",
+  "type": "module",
+  "main": "./src/index.mjs",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "contributors": [
     "Jonathan Perry <jonathanperry@modernpoacher.com>",
@@ -17,22 +18,14 @@
   ],
   "license": "BSD-3-Clause",
   "engines": {
-    "node": ">=16.13.0"
+    "node": ">=18.5.0"
   },
   "repository": "git://github.com/modernpoacher/catbox-mongodb",
   "scripts": {
-    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
-    "prebuild": "npm run clean",
-    "test": "cross-env NODE_ENV=test mocha test --recursive -r @babel/register",
-    "test-cov-html": "lab -r html -o coverage.html -a @hapi/code -L",
-    "build": "npm run babel",
-    "build:watch": "npm run babel:watch",
-    "clean": "rimraf lib",
-    "babel": "babel src -d lib",
-    "babel:watch": "npm run babel -- -w",
-    "lint": "eslint .",
+    "test": "cross-env NODE_ENV=test mocha test --recursive --verbose",
+    "lint": "eslint . --ext .mjs --ext .cjs",
     "lint:fix": "npm run lint -- --fix",
-    "pre-commit": "npm run lint && npm run build && git add lib"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
@@ -41,27 +34,24 @@
     "mongodb": "^5.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.21.5",
     "@babel/core": "^7.22.1",
     "@babel/eslint-parser": "^7.21.8",
-    "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/plugin-proposal-export-default-from": "^7.18.10",
     "@babel/preset-env": "^7.22.2",
-    "@babel/register": "^7.21.0",
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^25.1.2",
-    "babel-plugin-module-resolver": "^5.0.0",
     "chai": "^4.3.7",
     "core-js": "^3.30.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.41.0",
     "eslint-config-standard": "^17.0.0",
-    "eslint-import-resolver-babel-module": "^5.3.2",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
-    "mocha": "^10.2.0",
-    "rimraf": "^5.0.1"
+    "husky": "^8.0.3",
+    "mocha": "^10.2.0"
+  },
+  "exports": {
+    ".": "./src/index.mjs"
   }
 }

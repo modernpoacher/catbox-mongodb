@@ -1,12 +1,12 @@
 import debug from 'debug'
 
 import * as MongoDB from 'mongodb'
-import Hoek from '@hapi/hoek'
+import * as Hoek from '@hapi/hoek'
 import {
   Boom
 } from '@hapi/boom'
 
-const log = debug('@modernpoacher/catbox-mongodb:connection')
+const log = debug('@modernpoacher/catbox-mongodb')
 
 log('`@modernpoacher/catbox-mongodb` is awake')
 
