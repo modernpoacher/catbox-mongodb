@@ -1,4 +1,4 @@
-# @modernpoacher/catbox-mongodb
+# `@modernpoacher/catbox-mongodb`
 
 A MongoDB adapter for [catbox](https://github.com/hapijs/catbox).
 
@@ -7,12 +7,13 @@ A MongoDB adapter for [catbox](https://github.com/hapijs/catbox).
 This adapter supports `Object`, `Array`, `Number`, `String`, `Date`, and `RegExp` data types.
 
 ## Installation
+
 Install `@modernpoacher/catbox-mongodb` via NPM.
 
 `@modernpoacher/catbox-mongodb` _requires_ [`catbox`](https://github.com/hapijs/catbox):
 
 ```
-npm install catbox @modernpoacher/catbox-mongodb
+npm i @hapi/catbox @modernpoacher/catbox-mongodb
 ```
 ---
 
@@ -23,53 +24,13 @@ npm install catbox @modernpoacher/catbox-mongodb
 - `partition` - the MongoDB database for cached items
 
 ## Usage
-Sample catbox cache initialization :
 
-```js
-const Catbox = require('catbox');
+```javascript
+import Catbox from '@hapi/catbox';
+import Client from '@modernpoacher/catbox-mongodb'
 
-const cache = new Catbox.Client(require('@modernpoacher/catbox-mongodb'), {
-  uri: 'your-mongodb-uri', // Defaults to 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
+const cache = new Catbox.Client(Client, {
+  uri: 'your-mongodb-uri',
   partition: 'your-cache-partition'
-})
-```
-
-Or configure your hapi server to use `@modernpoacher/catbox-mongodb` as the caching strategy.
-
-For hapi `v17`:
-
-```js
-const Hapi = require('hapi')
-
-const server = new Hapi.Server({
-  cache: [
-    {
-      name: 'mongodb-cache',
-      engine: require('@modernpoacher/catbox-mongodb'),
-      uri: 'your-mongodb-uri', // Defaults to 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
-      partition: 'your-cache-partition'
-    }
-  ]
-})
-```
-
-For hapi `v18`:
-
-```js
-const Hapi = require('hapi')
-
-const server = new Hapi.Server({
-  cache : [
-    {
-      name: 'mongodb-cache',
-      provider: {
-        constructor: require('@modernpoacher/catbox-mongodb'),
-        options: {
-          uri: 'your-mongodb-uri', // Defaults to 'mongodb://127.0.0.1:27017/?maxPoolSize=5'
-          partition: 'your-cache-partition'
-        }
-      }
-    }
-  ]
 })
 ```
