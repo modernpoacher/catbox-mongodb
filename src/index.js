@@ -6,7 +6,7 @@ import {
   Boom
 } from '@hapi/boom'
 
-const log = debug('@modernpoacher/catbox-mongodb:connection')
+const log = debug('@modernpoacher/catbox-mongodb')
 
 log('`@modernpoacher/catbox-mongodb` is awake')
 
