@@ -1,17 +1,16 @@
 {
   "name": "@modernpoacher/catbox-mongodb",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "MongoDB adapter for Catbox",
   "keywords": [
     "cache",
     "catbox",
     "mongodb"
   ],
-  "type": "module",
   "main": "./src/index.mjs",
+  "type": "module",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "contributors": [
-    "Jonathan Perry <jonathanperry@modernpoacher.com>",
     "Marcus Poehls <marcus@futurestud.io> (https://futurestud.io)",
     "Wyatt Preul <wpreul@gmail.com> (http://jsgeek.com)",
     "Jarda Kotesovec <jarda.kotesovec@gmail.com>"
