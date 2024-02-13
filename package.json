@@ -44,7 +44,7 @@
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^25.2.0",
     "@modernpoacher/hooks": "^1.0.462",
-    "chai": "^5.0.3",
+    "chai": "^5.1.0",
     "core-js": "^3.35.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
