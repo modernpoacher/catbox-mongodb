@@ -37,13 +37,13 @@
     "mongodb": "^6.5.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.0",
-    "@babel/eslint-parser": "^7.23.10",
-    "@babel/preset-env": "^7.24.0",
+    "@babel/core": "^7.24.1",
+    "@babel/eslint-parser": "^7.24.1",
+    "@babel/preset-env": "^7.24.1",
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^25.2.0",
-    "@modernpoacher/hooks": "^1.0.467",
+    "@modernpoacher/hooks": "^1.0.468",
     "chai": "^5.1.0",
     "core-js": "^3.36.1",
     "cross-env": "^7.0.3",
