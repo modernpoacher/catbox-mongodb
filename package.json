@@ -34,7 +34,7 @@
     "@hapi/boom": "^10.0.1",
     "@hapi/hoek": "^11.0.4",
     "debug": "^4.3.4",
-    "mongodb": "^6.6.1"
+    "mongodb": "^6.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
@@ -43,7 +43,7 @@
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^25.2.0",
-    "@modernpoacher/hooks": "^1.0.474",
+    "@modernpoacher/hooks": "^1.0.475",
     "chai": "^5.1.1",
     "core-js": "^3.37.1",
     "cross-env": "^7.0.3",
