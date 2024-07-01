@@ -12,7 +12,7 @@
   "author": {
     "name": "Jonathan Perry for Modern Poacher Limited",
     "email": "modernpoacher@modernpoacher.com",
-    "url": "http://modernpoacher.com"
+    "url": "https://modernpoacher.com"
   },
   "contributors": [
     "Marcus Poehls <marcus@futurestud.io> (https://futurestud.io)",
@@ -43,7 +43,7 @@
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^25.2.0",
-    "@modernpoacher/hooks": "^1.0.479",
+    "@modernpoacher/hooks": "^1.0.480",
     "chai": "^5.1.1",
     "core-js": "^3.37.1",
     "cross-env": "^7.0.3",
