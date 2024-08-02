@@ -43,7 +43,7 @@
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^25.3.1",
-    "@modernpoacher/hooks": "^1.0.488",
+    "@modernpoacher/hooks": "^1.0.489",
     "chai": "^5.1.1",
     "core-js": "^3.37.1",
     "cross-env": "^7.0.3",
