@@ -45,11 +45,11 @@
     "@hapi/lab": "^25.3.1",
     "@modernpoacher/hooks": "^1.0.490",
     "chai": "^5.1.1",
-    "core-js": "^3.38.0",
+    "core-js": "^3.38.1",
     "cross-env": "^7.0.3",
     "eslint": "8.57.0",
     "eslint-config-standard": "^17.1.0",
-    "husky": "^9.1.4",
+    "husky": "^9.1.5",
     "mocha": "^10.7.3"
   },
   "exports": {
