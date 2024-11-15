@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
-    "@hapi/hoek": "^11.0.6",
+    "@hapi/hoek": "^11.0.7",
     "debug": "^4.3.7",
     "mongodb": "^6.10.0"
   },
