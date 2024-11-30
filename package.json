@@ -23,7 +23,10 @@
   "engines": {
     "node": ">=18.12.0"
   },
-  "repository": "git://github.com/modernpoacher/catbox-mongodb",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/modernpoacher/catbox-mongodb.git"
+  },
   "scripts": {
     "lint": "eslint . --ext .mjs,.cjs",
     "lint:fix": "npm run lint -- --fix",
