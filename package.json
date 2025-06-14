@@ -37,22 +37,22 @@
     "@hapi/boom": "^10.0.1",
     "@hapi/hoek": "^11.0.7",
     "debug": "^4.4.1",
-    "mongodb": "^6.16.0"
+    "mongodb": "^6.17.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.1",
-    "@babel/eslint-parser": "^7.27.1",
+    "@babel/core": "^7.27.4",
+    "@babel/eslint-parser": "^7.27.5",
     "@babel/preset-env": "^7.27.2",
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^26.0.0",
     "chai": "^5.2.0",
-    "core-js": "^3.42.0",
+    "core-js": "^3.43.0",
     "cross-env": "^7.0.3",
     "eslint": "8.57.1",
     "eslint-config-standard": "^17.1.0",
     "husky": "^9.1.7",
-    "mocha": "^11.4.0"
+    "mocha": "^11.6.0"
   },
   "exports": {
     ".": "./src/index.mjs"
