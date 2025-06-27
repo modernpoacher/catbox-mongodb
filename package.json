@@ -40,7 +40,7 @@
     "mongodb": "^6.17.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.27.4",
+    "@babel/core": "^7.27.7",
     "@babel/eslint-parser": "^7.27.5",
     "@babel/preset-env": "^7.27.2",
     "@hapi/catbox": "^12.1.1",
