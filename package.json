@@ -36,12 +36,12 @@
   "dependencies": {
     "@hapi/boom": "^10.0.1",
     "@hapi/hoek": "^11.0.7",
-    "debug": "^4.4.1",
+    "debug": "^4.4.3",
     "mongodb": "^6.19.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.3",
-    "@babel/eslint-parser": "^7.28.0",
+    "@babel/core": "^7.28.4",
+    "@babel/eslint-parser": "^7.28.4",
     "@babel/preset-env": "^7.28.3",
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
