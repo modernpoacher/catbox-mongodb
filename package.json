@@ -46,13 +46,13 @@
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^26.0.0",
-    "chai": "^6.0.1",
+    "chai": "^6.2.0",
     "core-js": "^3.45.1",
-    "cross-env": "^10.0.0",
+    "cross-env": "^10.1.0",
     "eslint": "8.57.1",
     "eslint-config-standard": "^17.1.0",
     "husky": "^9.1.7",
-    "mocha": "^11.7.2"
+    "mocha": "^11.7.3"
   },
   "exports": {
     ".": "./src/index.mjs"
