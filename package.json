@@ -1,6 +1,6 @@
 {
   "name": "@modernpoacher/catbox-mongodb",
-  "version": "1.1.233",
+  "version": "1.1.234",
   "description": "MongoDB adapter for Catbox",
   "keywords": [
     "cache",
