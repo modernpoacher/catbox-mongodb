@@ -28,7 +28,7 @@
     "url": "git+https://github.com/modernpoacher/catbox-mongodb.git"
   },
   "scripts": {
-    "lint": "eslint . --ext .mjs,.cjs",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky",
     "test": "cross-env NODE_ENV=test mocha test --recursive --verbose"
@@ -41,16 +41,16 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.0",
-    "@babel/eslint-parser": "^7.28.6",
     "@babel/preset-env": "^7.29.5",
     "@hapi/catbox": "^12.1.1",
     "@hapi/code": "^9.0.3",
     "@hapi/lab": "^26.0.1",
+    "@sequencemedia/eslint-config-standard": "0.4.2",
     "chai": "^6.2.2",
     "core-js": "^3.49.0",
     "cross-env": "^10.1.0",
-    "eslint": "8.57.1",
-    "eslint-config-standard": "^17.1.0",
+    "eslint": "10.15.0",
+    "globals": "^17.14.0",
     "husky": "^9.1.7",
     "mocha": "^11.7.5"
   },
